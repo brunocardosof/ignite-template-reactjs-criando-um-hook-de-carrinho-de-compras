@@ -6,7 +6,7 @@ import {
 } from "react-icons/md";
 
 import { useCart } from "../../hooks/useCart";
-// import { formatPrice } from '../../util/format';
+import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total } from "./styles";
 
 interface Product {
@@ -23,20 +23,20 @@ const Cart = (): JSX.Element => {
   // const cartFormatted = cart.map(product => ({
   //   // TODO
   // }))
-  // const total =
-  //   formatPrice(
-  //     cart.reduce((sumTotal, product) => {
-  //       // TODO
-  //     }, 0)
-  //   )
+  const total = formatPrice(
+    cart.reduce((sumTotal, product) => {
+      sumTotal += product.price * product.amount;
+      return sumTotal;
+    }, 0)
+  );
 
   function handleProductIncrement(product: Product) {
-    updateProductAmount({productId: product.id, amount: 1});    
+    updateProductAmount({ productId: product.id, amount: 1 });
   }
 
   function handleProductDecrement(product: Product) {
-    if(product.amount <= 0) return;
-    updateProductAmount({productId: product.id, amount: -1});
+    if (product.amount <= 0) return;
+    updateProductAmount({ productId: product.id, amount: -1 });
   }
 
   function handleRemoveProduct(productId: number) {
@@ -115,7 +115,7 @@ const Cart = (): JSX.Element => {
 
         <Total>
           <span>TOTAL</span>
-          <strong>R$ 359,80</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>
