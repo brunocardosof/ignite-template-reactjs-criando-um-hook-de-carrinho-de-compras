@@ -44,28 +44,25 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         return;
       }
       if (Object.keys(productExists).length) {
-        setCart(
-          cart.map((product) =>
-            product.id === productId
-              ? { ...product, amount: product.amount + 1 }
-              : product
-          )
+        const updatedProduct = cart.filter(
+          (product) => product.id === productId && product.amount + 1
         );
+        const newCart = [...cart, ...updatedProduct];
+        localStorage.setItem("@RocketShoes:cart", JSON.stringify(newCart));
+        setCart(newCart);
       } else {
         const newProduct = {
           ...product.data,
           amount: 1,
         };
-        setCart([...cart, newProduct]);
+        const newCart = [...cart, newProduct];
+        setCart(newCart);
+        localStorage.setItem("@RocketShoes:cart", JSON.stringify(newCart));
       }
     } catch {
       toast.error("Erro na adição do produto");
     }
   };
-
-  useEffect(() => {
-    localStorage.setItem("@RocketShoes:cart", JSON.stringify(cart));
-  }, [cart]);
 
   const removeProduct = (productId: number) => {
     try {
@@ -87,9 +84,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
       setCart(
         cart.map((product) =>
-          product.id === productId
-            ? { ...product, amount }
-            : product
+          product.id === productId ? { ...product, amount } : product
         )
       );
     } catch {
