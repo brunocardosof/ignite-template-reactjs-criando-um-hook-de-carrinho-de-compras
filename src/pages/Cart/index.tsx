@@ -60,12 +60,12 @@ const Cart = (): JSX.Element => {
               <td>
                 <img
                   src={product.image}
-                  alt="Tênis de Caminhada Leve Confortável"
+                  alt={product.title}
                 />
               </td>
               <td>
                 <strong>{product.title}</strong>
-                <span>{product.price}</span>
+                <span>{formatPrice(product.price)}</span>
               </td>
               <td>
                 <div>
@@ -93,7 +93,7 @@ const Cart = (): JSX.Element => {
                 </div>
               </td>
               <td>
-                <strong>{product.price}</strong>
+                <strong>{formatPrice(product.price)}</strong>
               </td>
               <td>
                 <button
