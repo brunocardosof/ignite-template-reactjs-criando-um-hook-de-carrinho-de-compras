@@ -12,11 +12,6 @@ interface Product {
   price: number;
   image: string;
 }
-
-interface ProductFormatted extends Product {
-  priceFormatted: string;
-}
-
 interface CartItemsAmount {
   [key: number]: number;
 }

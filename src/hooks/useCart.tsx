@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
-import { Product, Stock } from "../types";
+import { Product } from "../types";
 
 interface CartProviderProps {
   children: ReactNode;
@@ -44,12 +43,11 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         return;
       }
       if (Object.keys(productExists).length) {
-        const updatedProduct = cart.filter((product) => {
-          if (product.id === productId) {
-            return (product.amount = product.amount + 1);
-          }
-        });
-        const newCart = [...cart, ...updatedProduct];
+        const newCart = cart.map((product) =>
+          product.id === productId
+            ? { ...product, amount: product.amount + 1 }
+            : product
+        );
         localStorage.setItem("@RocketShoes:cart", JSON.stringify(newCart));
         setCart(newCart);
       } else {
