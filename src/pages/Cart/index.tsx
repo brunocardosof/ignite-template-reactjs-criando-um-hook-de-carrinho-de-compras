@@ -35,7 +35,6 @@ const Cart = (): JSX.Element => {
   }
 
   function handleProductDecrement(product: Product) {
-    if (product.amount <= 0) return;
     updateProductAmount({ productId: product.id, amount: product.amount -1});
   }
 
